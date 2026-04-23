@@ -1,95 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowFox Security</title>
-    <style>
-        body {
-            background-color: #050a0f;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .banner {
-            width: 100%;
-            max-width: 1000px;
-            height: auto;
-            margin-top: 20px;
-        }
-        .content {
-            padding: 40px;
-            max-width: 900px;
-            text-align: center;
-        }
-        .tools {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        .tool-card {
-            width: 350px;
-            transition: transform 0.3s ease;
-        }
-        .tool-card:hover {
-            transform: scale(1.02);
-        }
-        .tool-card img {
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid #1a2a3a;
-        }
-        footer {
-            margin-top: 60px;
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid #1a2a3a;
-            width: 100%;
-        }
-        .footer-logo {
-            width: 120px;
-            opacity: 0.8;
-        }
-        .welcome-text {
-            color: #00d4ff;
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            font-family: 'Courier New', Courier, monospace; /* Ger mer terminal-känsla */
-        }
-    </style>
-</head>
-<body>
+  <html lang="en">
+  <head>                                                                                  
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">              
+      <meta name="description" content="ShadowFox Security – open-source security tools by
+   Elin Olsson.">                                                                         
+      <title>ShadowFox Security</title>
+      <style>                                                                             
+          body {                                            
+              background-color: #050a0f;
+              color: #e0e0e0;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;               
+              margin: 0;
+              display: flex;                                                              
+              flex-direction: column;                       
+              align-items: center;
+          }                                                                               
+          .banner {
+              width: 100%;                                                                
+              max-width: 1000px;                            
+              height: auto;
+              margin-top: 20px;
+          }
+          .content {
+              padding: 40px;
+              max-width: 900px;
+              text-align: center;                                                         
+          }
+          .tools {                                                                        
+              display: flex;                                
+              justify-content: center;
+              gap: 30px;
+              flex-wrap: wrap;
+              margin-top: 20px;
+          }
+          .tool-card {                                                                    
+              width: 350px;
+              transition: transform 0.3s ease;                                            
+          }                                                 
+          .tool-card:hover {
+              transform: scale(1.02);
+          }
+          .tool-card img {
+              width: 100%;
+              border-radius: 12px;                                                        
+              border: 1px solid #1a2a3a;
+          }                                                                               
+          .tool-card p {                                    
+              font-size: 0.85em;
+              color: #8a9baa;                                                             
+              margin-top: 10px;
+          }                                                                               
+          .tool-card-wrapper {                              
+              position: relative;                                                         
+              display: inline-block;
+              width: 100%;                                                                
+          }                                                 
+          .coming-soon-badge {
+              position: absolute;
+              top: 12px;                                                                  
+              right: 12px;
+              background-color: #0d1f2d;                                                  
+              color: #00d4ff;                               
+              font-family: 'Courier New', Courier, monospace;                             
+              font-size: 0.7em;
+              padding: 4px 10px;                                                          
+              border: 1px solid #00d4ff44;                  
+              border-radius: 4px;                                                         
+              letter-spacing: 1px;
+          }                                                                               
+          footer {                                          
+              margin-top: 60px;
+              padding: 40px;                                                              
+              text-align: center;
+              border-top: 1px solid #1a2a3a;                                              
+              width: 100%;                                  
+          }
+          .footer-logo {
+              width: 120px;
+              opacity: 0.8;
+          }                                                                               
+          .footer-links {
+              margin-top: 12px;                                                           
+          }                                                 
+          .footer-links a {
+              color: #00d4ff;
+              text-decoration: none;                                                      
+              font-size: 0.9em;
+              letter-spacing: 1px;                                                        
+          }                                                 
+          .footer-links a:hover {
+              text-decoration: underline;
+          }
+          .welcome-text {                                                                 
+              color: #00d4ff;
+              font-size: 1.5em;                                                           
+              margin-bottom: 30px;                          
+              font-family: 'Courier New', Courier, monospace;
+          }
+      </style>
+  </head>                                                                                 
+  <body>
+                                                                                          
+      <div style="color: #00d4ff; font-weight: bold; margin-top: 20px; letter-spacing: 
+  2px; text-align: center;">
+          [ ~ SITE UNDER CONSTRUCTION ~ ]
+      </div>                                                                              
+   
+      <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
+                                                            
+      <div class="content">
+          <p class="welcome-text">shadowfox@security:~$ Feel free to explore and test my
+  tools!</p>                                                                              
+   
+          <div class="tools">                                                             
+              <div class="tool-card">                       
+                  <a href="https://github.com/elin-olsson/ssh-tls-auditor" 
+  target="_blank">
+                      <div class="tool-card-wrapper">
+                          <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">    
+                      </div>
+                  </a>                                                                    
+                  <p>Audits SSH &amp; TLS configurations — checks algorithms, banners,
+  certificates and known weaknesses.</p>                                                  
+              </div>
+              <div class="tool-card">                                                     
+                  <div class="tool-card-wrapper">           
+                      <img src="nyloggac-w.png" alt="Chain-Watch">                        
+                      <span class="coming-soon-badge">COMING SOON</span>
+                  </div>                                                                  
+                  <p>Monitors certificate chains and detects expiry, mis-issuance and
+  trust anchor changes.</p>                                                               
+              </div>
+          </div>                                                                          
+      </div>                                                                              
+   
+      <footer>                                                                            
+          <img src="nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
+          <p>&copy; 2026 shadowfox.se</p>
+          <div class="footer-links">
+              <a href="https://github.com/elin-olsson"                                    
+  target="_blank">github.com/elin-olsson</a>
+          </div>                                                                          
+      </footer>                                             
 
-    <div style="color: #00d4ff; font-weight: bold; margin-top: 20px; letter-spacing: 2px; text-align: center;">
-        [ ~ SITE UNDER CONSTRUCTION ~ ]
-    </div>
-
-    <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">
-
-    <div class="content">
-        <p class="welcome-text">shadowfox@security:~$ Feel free to explore and test my tools!</p>
-
-        <div class="tools">
-            <div class="tool-card">
-                <a href="https://github.com/elin-olsson/ssh-tls-auditor" target="_blank">
-                    <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
-                </a>
-            </div>
-            <div class="tool-card">
-                <img src="nyloggac-w.png" alt="Chain-Watch">
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <img src="nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
-        <p>&copy; 2026 shadowfox.se</p>
-    </footer>
-
-</body>
-</html>
+  </body>
+  </html>
