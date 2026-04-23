@@ -1,2 +1,2 @@
-# elin-olsson.github.io
-homepage for shadowfox.se
+# shadowfox.se
+making a homepage for shadowfox.se
