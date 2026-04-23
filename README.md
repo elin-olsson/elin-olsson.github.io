@@ -1,2 +1,2 @@
 # shadowfox.se
-making a homepage for shadowfox.se
+building a homepage for shadowfox.se
