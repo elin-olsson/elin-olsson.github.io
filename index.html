@@ -16,24 +16,66 @@
         }
         .banner {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
             height: auto;
+            margin-top: 20px;
         }
         .content {
             padding: 40px;
-            max-width: 800px;
+            max-width: 900px;
             text-align: center;
         }
-        h1 { color: #00d4ff; }
+        .tools {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .tool-card {
+            width: 350px;
+        }
+        .tool-card img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #1a2a3a;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+        }
+        .footer-logo {
+            width: 120px;
+            opacity: 0.8;
+        }
+        h1 { color: #00d4ff; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <h1>Välkommen till ShadowFox.se</h1>
-    
+    <img src="nybannerhemsidashadowfox.jpg" alt="ShadowFox Banner" class="banner">
+
     <div class="content">
-        <p>Hemsidan är under uppbyggnad.</p>
+        <h1>ShadowFox Security</h1>
+        <p>Stay Unseen. Stay Secure.</p>
+
+        <div class="tools">
+            <div class="tool-card">
+                <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
+            </div>
+            <div class="tool-card">
+                <img src="nyloggac-w.png" alt="Chain-Watch">
+            </div>
+        </div>
     </div>
+
+    <footer>
+        <img src="nyloggashadowfox.png" alt="ShadowFox Logo" class="footer-logo">
+        <p>&copy; 2024 shadowfox.se</p>
+    </footer>
 
 </body>
 </html>
