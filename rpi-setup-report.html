@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPi 4 Resurrection Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        h3 { font-size: 1.1em; color: #e0e0e0; }
+        
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        
+        .status-box {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #1a2a3a;
+            padding: 8px 0;
+            font-size: 0.9em;
+        }
+        .status-item:last-child { border-bottom: none; }
+        .status-label { color: #5a6b7a; font-family: 'Courier New', Courier, monospace; }
+        .status-value { color: #00d4ff; }
+
+        .problem-card {
+            background-color: #1a1a1a;
+            border-left: 4px solid #ff4d4d;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .solution-card {
+            background-color: #1a1a1a;
+            border-left: 4px solid #40ffaa;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        pre {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link"><- back to home</a>
+        
+        <div class="metadata">DATE: 2026-04-18 | CATEGORY: Hardware & Infrastructure | AUTHOR: ShadowFox</div>
+        
+        <h1>RPi 4: Resurrection & DietPi Setup</h1>
+        
+        <p>A technical log detailing the recovery and re-deployment of a Raspberry Pi 4 Model B, involving deep-level troubleshooting of filesystem corruption and kernel-level cache issues.</p>
+
+        <div class="status-box">
+            <div class="status-item"><span class="status-label">DEVICE</span><span class="status-value">Raspberry Pi 4 Model B (aarch64)</span></div>
+            <div class="status-item"><span class="status-label">OPERATING SYSTEM</span><span class="status-value">DietPi v10.2.3 (Debian Trixie/13)</span></div>
+            <div class="status-item"><span class="status-label">IP ADDRESS</span><span class="status-value">192.168.1.100</span></div>
+            <div class="status-item"><span class="status-label">PRIMARY SERVICE</span><span class="status-value">OpenSSH (Secure fox user)</span></div>
+        </div>
+
+        <h2>The Challenge: Ghost in the Machine</h2>
+        <p>The device initially failed to boot, showing no HDMI signal and no network presence. Initial diagnostics pointed to a corrupted SD card, but the recovery process revealed a more complex issue.</p>
+
+        <div class="problem-card">
+            <strong>The FAT-fs Error:</strong> Three different microSD cards failed with <code>invalid cluster chain</code> errors during write operations, despite the raw data being verified via MD5 checksums.
+        </div>
+
+        <div class="solution-card">
+            <strong>The Fix:</strong> Identified the issue as a Linux kernel-cache conflict with the FAT driver. Solved this by loop-mounting the OS image file locally and modifying the <code>dietpi.txt</code> configuration <em>before</em> flashing, bypassing the need for post-flash filesystem writes.
+        </div>
+
+        <h2>Configuration Highlights</h2>
+        <ul>
+            <li><strong>IPv6 Disabled:</strong> Streamlined networking for lab stability.</li>
+            <li><strong>Security First:</strong> OpenSSH configured with a dedicated non-root user (fox) with sudo privileges.</li>
+            <li><strong>Optimized OS:</strong> Chose DietPi for its extremely low footprint and performance on ARM architecture.</li>
+        </ul>
+
+        <h2>System Hardening Commands</h2>
+        <pre># Adding secure user and granting sudo rights
+adduser fox
+usermod -aG sudo fox
+
+# Checking system integrity
+dietpi-drive_manager
+df -h</pre>
+
+        <h2>Data Recovery Side-Quest</h2>
+        <p>During the process, an old Android SD card was identified containing 5.6 GB of legacy data. This was successfully backed up via a bit-perfect image before the card was repurposed for the lab.</p>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>

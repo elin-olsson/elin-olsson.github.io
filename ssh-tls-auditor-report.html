@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSH-TLS Auditor Technical Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        
+        .summary-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .summary-card {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .summary-card .number { font-size: 2em; font-weight: bold; display: block; }
+        .summary-card .label { font-size: 0.7em; text-transform: uppercase; color: #5a6b7a; letter-spacing: 1px; }
+        
+        .grade-d { color: #ffd11a; }
+        .num-pass { color: #40ffaa; }
+        .num-fail { color: #ff4d4d; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85em;
+            background-color: #0d141b;
+        }
+        th, td {
+            border: 1px solid #1a2a3a;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a2a3a;
+            color: #00d4ff;
+        }
+        
+        .badge {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .badge-pass { background-color: #1e7e3444; color: #40ffaa; }
+        .badge-crit { background-color: #c0392b44; color: #ff4d4d; }
+        .badge-warn { background-color: #85640444; color: #ffd11a; }
+        .badge-info { background-color: #1a56b044; color: #00d4ff; }
+
+        .fix-box {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #8a9baa;
+            border-left: 2px solid #ffd11a;
+            padding-left: 10px;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link"><- back to home</a>
+        
+        <div class="metadata">DATE: 2026-04-17 | CATEGORY: Configuration Audit | AUTHOR: ShadowFox</div>
+        
+        <h1>SSH/TLS Auditor — Sample Report</h1>
+        
+        <p>This report demonstrates the output of <code style="color: #00d4ff;">ssh-tls-auditor</code> when run against a standard Debian target. The tool evaluates security posture across multiple protocols and assigns a score based on industry best practices.</p>
+
+        <div class="summary-box">
+            <div class="summary-card"><span class="number grade-d">D</span><span class="label">Overall Grade</span></div>
+            <div class="summary-card"><span class="number num-pass">30</span><span class="label">Checks Passed</span></div>
+            <div class="summary-card"><span class="number num-fail">6</span><span class="label">Critical/Warnings</span></div>
+        </div>
+
+        <h2>Network Vulnerabilities</h2>
+        <table>
+            <tr><th>Check</th><th>Result</th><th>Detail</th></tr>
+            <tr><td>SSH Root Login</td><td><span class="badge badge-crit">CRIT</span></td><td>Enabled — server offered auth methods: publickey, password</td></tr>
+            <tr><td>Password Auth</td><td><span class="badge badge-crit">CRIT</span></td><td>Enabled — server accepts password authentication</td></tr>
+            <tr><td>SSH Version</td><td><span class="badge badge-info">INFO</span></td><td>SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u9</td></tr>
+        </table>
+
+        <h2>Algorithm Analysis (Selection)</h2>
+        <p>The auditor checks for deprecated or weak cryptographic algorithms in the SSH configuration.</p>
+        <table>
+            <tr><th>Algorithm</th><th>Result</th><th>Detail</th></tr>
+            <tr><td>sntrup761x25519-sha512</td><td><span class="badge badge-pass">PASS</span></td><td>Quantum-resistant hybrid</td></tr>
+            <tr><td>curve25519-sha256</td><td><span class="badge badge-pass">PASS</span></td><td>Safe curve</td></tr>
+            <tr><td>hmac-sha1</td><td><span class="badge badge-warn">WARN</span></td><td>Deprecated — should be removed</td></tr>
+            <tr><td>umac-64@openssh.com</td><td><span class="badge badge-warn">WARN</span></td><td>Deprecated — short tag length</td></tr>
+        </table>
+
+        <h2>Remediation Guidance</h2>
+        <p>For every failure, the tool provides specific commands to fix the issue:</p>
+        <div class="fix-box">
+            <strong>Fix for Root Login:</strong> Set <code>PermitRootLogin no</code> in <code>/etc/ssh/sshd_config</code> and reload the service.
+        </div>
+        <div class="fix-box">
+            <strong>Fix for Password Auth:</strong> Set <code>PasswordAuthentication no</code>. Ensure SSH key-based login works first.
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>

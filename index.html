@@ -137,6 +137,70 @@
               margin-bottom: 30px;                          
               font-family: 'Courier New', Courier, monospace;
           }
+
+          /* New Reports Section Styles */
+          .section-title {
+              color: #00d4ff;
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 1.2em;
+              margin-top: 60px;
+              margin-bottom: 30px;
+              text-transform: uppercase;
+              letter-spacing: 3px;
+              border-bottom: 1px solid #1a2a3a;
+              padding-bottom: 10px;
+              width: 100%;
+              max-width: 900px;
+          }
+          .reports-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+              gap: 25px;
+              width: 100%;
+              max-width: 900px;
+          }
+          .report-card {
+              background-color: #0d141b;
+              border: 1px solid #1a2a3a;
+              border-radius: 8px;
+              padding: 25px;
+              text-align: left;
+              transition: border-color 0.3s ease;
+              text-decoration: none;
+              color: inherit;
+          }
+          .report-card:hover {
+              border-color: #00d4ff44;
+          }
+          .report-date {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.75em;
+              color: #5a6b7a;
+          }
+          .report-card h3 {
+              margin: 10px 0;
+              color: #e0e0e0;
+              font-size: 1.1em;
+          }
+          .report-card p {
+              font-size: 0.85em;
+              color: #8a9baa;
+              line-height: 1.6;
+              margin-bottom: 15px;
+          }
+          .tag-container {
+              display: flex;
+              gap: 8px;
+              flex-wrap: wrap;
+          }
+          .tag {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.7em;
+              background-color: #1a2a3a;
+              color: #00d4ff;
+              padding: 2px 8px;
+              border-radius: 4px;
+          }
       </style>
   </head>                                                                                 
   <body>
@@ -166,6 +230,43 @@
                   </a>
                   <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
               </div>
+          </div>
+
+          <h2 class="section-title">Lab Reports &amp; Writeups</h2>
+          
+          <div class="reports-grid">
+              <a href="ssh-tls-auditor-report.html" class="report-card">
+                  <div class="report-date">2026-04-10</div>
+                  <h3>SSH-TLS Auditor: Multi-Protocol Auditing</h3>
+                  <p>A comprehensive security tool for auditing SSH, TLS, HTTP, SMTP, FTP, and RDP. Checks for weak algorithms, expired certificates, and insecure banners.</p>
+                  <div class="tag-container">
+                      <span class="tag">Python</span>
+                      <span class="tag">Network Security</span>
+                      <span class="tag">Cryptography</span>
+                  </div>
+              </a>
+
+              <a href="chain-watch-report.html" class="report-card">
+                  <div class="report-date">2026-04-21</div>
+                  <h3>Chain-Watch: Building a Log Correlator</h3>
+                  <p>Developing a Python-based security tool to detect multi-stage attacks by correlating SSH logs, firewalls, and auditd events.</p>
+                  <div class="tag-container">
+                      <span class="tag">Python</span>
+                      <span class="tag">Log Analysis</span>
+                      <span class="tag">Security</span>
+                  </div>
+              </a>
+
+              <a href="rpi-setup-report.html" class="report-card">
+                  <div class="report-date">2026-04-18</div>
+                  <h3>RPi 4: Resurrection &amp; DietPi Setup</h3>
+                  <p>Recovering a Raspberry Pi 4, troubleshooting kernel-cache issues with SD-cards, and configuring a clean DietPi installation.</p>
+                  <div class="tag-container">
+                      <span class="tag">Raspberry Pi</span>
+                      <span class="tag">Linux</span>
+                      <span class="tag">Troubleshooting</span>
+                  </div>
+              </a>
           </div>
 
       </div>

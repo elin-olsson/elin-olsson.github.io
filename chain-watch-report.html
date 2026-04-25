@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain-Watch Technical Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        h3 { font-size: 1.1em; color: #e0e0e0; }
+        
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+            background-color: #0d141b;
+        }
+        th, td {
+            border: 1px solid #1a2a3a;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a2a3a;
+            color: #00d4ff;
+        }
+        
+        pre {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+        
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .severity-critical { color: #ff4d4d; }
+        .severity-high { color: #ff944d; }
+        .severity-medium { color: #ffd11a; }
+
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link"><- back to home</a>
+        
+        <div class="metadata">DATE: 2026-04-21 | CATEGORY: Log Analysis | AUTHOR: ShadowFox</div>
+        
+        <h1>chain-watch — Technical Report</h1>
+        
+        <p>A Python-based CLI security tool designed to correlate security logs on Linux systems. By analyzing <code class="highlight">auth.log</code>, firewall logs, and <code class="highlight">auditd</code> events in parallel, it identifies attack chains and patterns that single-log monitors might miss.</p>
+
+        <h2>Project Structure</h2>
+        <table>
+            <tr><th>File</th><th>Content</th></tr>
+            <tr><td>chainwatch.py</td><td>Core logic: parsers, correlator, CLI, and reporting (~1,100 lines)</td></tr>
+            <tr><td>requirements.txt</td><td>Minimal dependencies (only pytest for development)</td></tr>
+            <tr><td>tests/</td><td>Comprehensive test suite (59 tests across 4 modules)</td></tr>
+        </table>
+
+        <h2>Core Functionality</h2>
+        
+        <h3>1. Multi-Source Parsers</h3>
+        <p>The tool handles three distinct log categories:</p>
+        <ul>
+            <li><strong>Auth/Secure:</strong> Tracks successful/failed SSH logins and sudo execution.</li>
+            <li><strong>Firewall:</strong> Detects UFW, Firewalld, Iptables, and Nftables logs.</li>
+            <li><strong>Auditd:</strong> Correlates syscalls and execution arguments (execve) with user identity.</li>
+        </ul>
+
+        <h3>2. Correlation Logic</h3>
+        <p>Events are grouped by source IP and analyzed within a sliding time window (default 600s). Key detection patterns include:</p>
+        <table>
+            <tr><th>Detection Chain</th><th>Severity</th><th>Trigger</th></tr>
+            <tr class="severity-medium"><td>Brute Force</td><td>Medium</td><td>&ge; 5 failed logins within window</td></tr>
+            <tr class="severity-critical"><td>Brute then Login</td><td>Critical</td><td>Brute force cluster followed by success</td></tr>
+            <tr class="severity-high"><td>Scan then Login</td><td>High</td><td>Firewall block followed by login attempt</td></tr>
+            <tr class="severity-high"><td>Lateral Movement</td><td>High/Critical</td><td>Success login followed by sensitive execution</td></tr>
+        </table>
+
+        <h2>Technical Challenges & Solutions</h2>
+        <p>During development, several complex issues were addressed:</p>
+        <ul>
+            <li><strong>Auditd Hex Decoding:</strong> Auditd often encodes arguments in hex. A custom decoder was implemented to normalize these into readable strings.</li>
+            <li><strong>Time Normalization:</strong> Different logs use different timestamp formats. The tool normalizes everything to a standard UTC datetime object for precise correlation.</li>
+            <li><strong>User-IP Mapping:</strong> Auditd doesn't log IPs for syscalls. The tool maps these back to the source IP by tracking the user's last successful SSH session.</li>
+        </ul>
+
+        <h2>GitHub & Deployment</h2>
+        <p>The project is currently maintained as a private repository with plans for an open-source release once the codebase is fully polished.</p>
+        <pre># Example usage
+sudo python3 chainwatch.py --html report.html</pre>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>
