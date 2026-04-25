@@ -72,30 +72,64 @@
               border-radius: 4px;                                                         
               letter-spacing: 1px;
           }                                                                               
-          footer {                                          
+          footer {
               margin-top: 60px;
-              padding: 40px;                                                              
-              text-align: center;
-              border-top: 1px solid #1a2a3a;                                              
-              width: 100%;                                  
+              padding: 40px;
+              border-top: 1px solid #1a2a3a;
+              width: 100%;
+              box-sizing: border-box;
+          }
+          .footer-columns {
+              display: flex;
+              align-items: flex-start;
+              gap: 60px;
+              padding-left: 20px;
+          }
+          .footer-left {
+              display: flex;
+              align-items: flex-start;
+              gap: 24px;
+              flex: 2;
           }
           .footer-logo {
-              width: 120px;
+              width: 160px;
               opacity: 0.8;
-              display: block;
-              margin-right: auto;
-          }                                                                               
-          .footer-links {
-              margin-top: 12px;                                                           
-          }                                                 
-          .footer-links a {
+              flex-shrink: 0;
+          }
+          .footer-col {
+              flex: 1;
+          }
+          .footer-col-title {
               color: #00d4ff;
-              text-decoration: none;                                                      
-              font-size: 0.9em;
-              letter-spacing: 1px;                                                        
-          }                                                 
-          .footer-links a:hover {
-              text-decoration: underline;
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.75em;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              margin: 0 0 10px 0;
+          }
+          .footer-col-link {
+              color: #8a9baa;
+              text-decoration: none;
+              font-size: 0.8em;
+              display: block;
+              line-height: 1.8;
+          }
+          .footer-col-link:hover {
+              color: #00d4ff;
+          }
+          .footer-col-text {
+              color: #8a9baa;
+              font-size: 0.8em;
+              line-height: 1.7;
+              margin: 0;
+          }
+          .footer-copy {
+              text-align: center;
+              font-size: 0.75em;
+              color: #8a9baa;
+              margin-top: 40px;
+              padding-top: 20px;
+              border-top: 1px solid #1a2a3a;
           }
           .welcome-text {                                                                 
               color: #00d4ff;
@@ -137,16 +171,26 @@
                   </a>
                   <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
               </div>
-          </div>                                                                          
-      </div>                                                                              
-   
-      <footer>                                                                            
-          <img src="nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
-          <p>&copy; 2026 shadowfox.se</p>
-          <div class="footer-links">
-              <a href="https://github.com/elin-olsson"                                    
-  target="_blank">github.com/elin-olsson</a>
-          </div>                                                                          
+          </div>
+
+      </div>
+
+      <footer>
+          <div class="footer-columns">
+              <div class="footer-left">
+                  <img src="nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
+                  <div class="footer-col">
+                      <h3 class="footer-col-title">About</h3>
+                      <p class="footer-col-text">Studying to become a Network Security Specialist. My background as an investigator at Försäkringskassan gave me a sharp eye for complex data, patterns, and risk — skills I now apply to network infrastructure and security. I work primarily on Linux, run a home lab for continuous learning, and enjoy developing open-source tools that solve real security problems.</p>
+                  </div>
+              </div>
+              <div class="footer-col">
+                  <h3 class="footer-col-title">Contact</h3>
+                  <a href="mailto:contact@shadowfox.se" class="footer-col-link">contact@shadowfox.se</a>
+                  <a href="https://github.com/elin-olsson" target="_blank" class="footer-col-link">github.com/elin-olsson</a>
+              </div>
+          </div>
+          <p class="footer-copy">&copy; 2026 shadowfox.se</p>
       </footer>                                             
 
   </body>
