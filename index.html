@@ -148,10 +148,12 @@
           }
           .welcome-text .cmd {
               color: #e0e0e0;
+              text-shadow: 0 0 5px rgba(0, 212, 255, 0.4);
           }
           .welcome-text .cursor {
               color: #00d4ff;
               animation: blink 1s step-end infinite;
+              text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
           }
           @keyframes blink {
               0%, 100% { opacity: 1; }
@@ -207,25 +209,6 @@
           }
           .report-card:hover:not(.report-card-disabled) h3 {
               color: #00d4ff;
-          }
-
-          /* Typewriter Effect */
-          .typewriter {
-              display: inline-block;
-              overflow: hidden;
-              white-space: nowrap;
-              border-right: 2px solid #00d4ff;
-              animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-          }
-
-          @keyframes typing {
-              from { width: 0 }
-              to { width: 100% }
-          }
-
-          @keyframes blink-caret {
-              from, to { border-color: transparent }
-              50% { border-color: #00d4ff }
           }
           .report-card p {
               font-size: 0.85em;
@@ -307,7 +290,7 @@
       <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
-          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd typewriter">Feel free to explore and test my tools!</span></p>                                                                              
+          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd">Feel free to explore and test my tools!</span><span class="cursor">|</span></p>                                                                              
    
           <div class="tools">                                                             
               <div class="tool-card">                       
