@@ -185,12 +185,14 @@
               border-radius: 8px;
               padding: 25px;
               text-align: left;
-              transition: border-color 0.3s ease;
+              transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
               text-decoration: none;
               color: inherit;
           }
-          .report-card:hover {
-              border-color: #00d4ff44;
+          .report-card:hover:not(.report-card-disabled) {
+              border-color: #00d4ff66;
+              transform: translateY(-5px);
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
           }
           .report-date {
               font-family: 'Courier New', Courier, monospace;
@@ -201,6 +203,29 @@
               margin: 10px 0;
               color: #e0e0e0;
               font-size: 1.1em;
+              transition: color 0.3s ease;
+          }
+          .report-card:hover:not(.report-card-disabled) h3 {
+              color: #00d4ff;
+          }
+
+          /* Typewriter Effect */
+          .typewriter {
+              display: inline-block;
+              overflow: hidden;
+              white-space: nowrap;
+              border-right: 2px solid #00d4ff;
+              animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+          }
+
+          @keyframes typing {
+              from { width: 0 }
+              to { width: 100% }
+          }
+
+          @keyframes blink-caret {
+              from, to { border-color: transparent }
+              50% { border-color: #00d4ff }
           }
           .report-card p {
               font-size: 0.85em;
@@ -282,7 +307,7 @@
       <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
-          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd">Feel free to explore and test my tools!</span><span class="cursor">|</span></p>                                                                              
+          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd typewriter">Feel free to explore and test my tools!</span></p>                                                                              
    
           <div class="tools">                                                             
               <div class="tool-card">                       
