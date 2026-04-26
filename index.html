@@ -201,6 +201,27 @@
               padding: 2px 8px;
               border-radius: 4px;
           }
+          .report-card-disabled {
+              cursor: default;
+              opacity: 0.55;
+          }
+          .report-card-disabled:hover {
+              border-color: #1a2a3a;
+          }
+          .tool-logo-placeholder {
+              width: 100%;
+              height: 140px;
+              background-color: #0d141b;
+              border: 1px solid #1a2a3a;
+              border-radius: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #1a3a4a;
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 1.1em;
+              letter-spacing: 3px;
+          }
 
           /* Responsive Adjustments */
           @media (max-width: 768px) {
@@ -263,13 +284,18 @@
                   <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
               </div>
               <div class="tool-card">
-                  <a href="https://github.com/elin-olsson/fox-trace" target="_blank">
-                      <div class="tool-card-wrapper">
-                          <div class="coming-soon-badge">COMING SOON</div>
-                          <img src="nyloggafox-trace.png" alt="Fox-trace">
-                      </div>
-                  </a>
+                  <div class="tool-card-wrapper">
+                      <div class="coming-soon-badge">COMING SOON</div>
+                      <img src="nyloggafox-trace.png" alt="Fox-trace">
+                  </div>
                   <p>Maps SSH trust relationships and analyzes potential lateral movement paths to visualize your network's true attack surface.</p>
+              </div>
+              <div class="tool-card">
+                  <div class="tool-card-wrapper">
+                      <div class="coming-soon-badge">COMING SOON</div>
+                      <div class="tool-logo-placeholder">ghost-trail</div>
+                  </div>
+                  <p>Reconstructs forensic timelines from Linux binary logs, shell histories, and file activity — DFIR for the command line.</p>
               </div>
           </div>
 
@@ -309,7 +335,7 @@
                   </div>
               </a>
 
-              <a href="fox-trace-report.html" class="report-card">
+              <div class="report-card report-card-disabled">
                   <div class="report-date">2026-04-26</div>
                   <h3>Fox-Trace: Mapping SSH Trust Relationships</h3>
                   <p>Building a tool that maps SSH trust graphs — authorized keys, known hosts, and live agents — to calculate blast radius and surface hidden lateral movement paths.</p>
@@ -317,10 +343,11 @@
                       <span class="tag">Python</span>
                       <span class="tag">SSH Security</span>
                       <span class="tag">DFIR</span>
+                      <span class="tag">COMING SOON</span>
                   </div>
-              </a>
+              </div>
 
-              <a href="ghost-trail-report.html" class="report-card">
+              <div class="report-card report-card-disabled">
                   <div class="report-date">2026-04-26</div>
                   <h3>Ghost-Trail: Linux Forensic Timeline Reconstructor</h3>
                   <p>A DFIR tool that reconstructs post-incident timelines from wtmp binary records, shell histories, file activity, and log gaps — with an interactive D3.js timeline export.</p>
@@ -328,8 +355,9 @@
                       <span class="tag">Python</span>
                       <span class="tag">DFIR</span>
                       <span class="tag">Forensics</span>
+                      <span class="tag">COMING SOON</span>
                   </div>
-              </a>
+              </div>
           </div>
 
       </div>
