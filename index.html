@@ -133,11 +133,24 @@
               padding-top: 20px;
               border-top: 1px solid #1a2a3a;
           }
-          .welcome-text {                                                                 
-              color: #00d4ff;
-              font-size: 1.5em;                                                           
-              margin-bottom: 30px;                          
+          .welcome-text {
+              font-size: 1.1em;
+              margin-bottom: 30px;
               font-family: 'Courier New', Courier, monospace;
+          }
+          .welcome-text .prompt {
+              color: #00d4ff;
+          }
+          .welcome-text .cmd {
+              color: #e0e0e0;
+          }
+          .welcome-text .cursor {
+              color: #00d4ff;
+              animation: blink 1s step-end infinite;
+          }
+          @keyframes blink {
+              0%, 100% { opacity: 1; }
+              50%       { opacity: 0; }
           }
 
           /* New Reports Section Styles */
@@ -264,8 +277,7 @@
       <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
-          <p class="welcome-text">shadowfox@security:~$ Feel free to explore and test my
-  tools!</p>                                                                              
+          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd">Feel free to explore and test my tools!</span><span class="cursor">|</span></p>                                                                              
    
           <div class="tools">                                                             
               <div class="tool-card">                       
