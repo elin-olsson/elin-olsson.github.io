@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fox-Trace Technical Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        h3 { font-size: 1.1em; color: #e0e0e0; }
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+            background-color: #0d141b;
+        }
+        th, td {
+            border: 1px solid #1a2a3a;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a2a3a;
+            color: #00d4ff;
+        }
+        pre {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        .risk-critical { color: #ff4d4d; }
+        .risk-high     { color: #ff944d; }
+        .risk-medium   { color: #ffd11a; }
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">&lt;- back to home</a>
+
+        <div class="metadata">DATE: 2026-04-26 | CATEGORY: SSH Security | AUTHOR: ShadowFox</div>
+
+        <h1>fox-trace — Technical Report</h1>
+
+        <p>A Python-based CLI tool that maps SSH trust relationships across a Linux system. By parsing <code class="highlight">~/.ssh/known_hosts</code>, <code class="highlight">authorized_keys</code>, private keys, and running SSH agents, it constructs a <em>Shadow Map</em> — a graph of which hosts and identities can reach each other without a password.</p>
+
+        <h2>Project Structure</h2>
+        <table>
+            <tr><th>File</th><th>Content</th></tr>
+            <tr><td>foxtrace.py</td><td>CLI entry point, output formatting, HTML and JSON export</td></tr>
+            <tr><td>src/harvester.py</td><td>Core logic: SSH parsing, fingerprinting, trust graph, risk scoring (~606 lines)</td></tr>
+            <tr><td>tests/</td><td>37 tests across 2 modules</td></tr>
+        </table>
+
+        <h2>Core Functionality</h2>
+
+        <h3>1. SSH Artefact Collection</h3>
+        <p>The harvester scans the user's <code class="highlight">~/.ssh/</code> directory and collects:</p>
+        <ul>
+            <li><strong>Private keys</strong> — type (RSA/Ed25519/ECDSA), encryption status, age, permissions</li>
+            <li><strong>Known hosts</strong> — all trusted remote hosts, including hashed entries</li>
+            <li><strong>Authorized keys</strong> — inbound trust: who can log in as the current user</li>
+            <li><strong>SSH config</strong> — HostName/IdentityFile aliases that expand the real attack surface</li>
+            <li><strong>SSH agents</strong> — live agent sockets in <code class="highlight">/tmp/ssh-*</code> that could be hijacked</li>
+        </ul>
+
+        <h3>2. Trust Graph &amp; Blast Radius</h3>
+        <p>All collected hosts and identities are assembled into a <em>trust graph</em>. The <em>blast radius</em> metric counts how many distinct hosts are reachable from the current system using only the keys found on disk. This is the number an attacker gains access to if this machine is compromised.</p>
+
+        <h3>3. Risk Scoring &amp; Alerts</h3>
+        <p>Each finding is classified with a risk score. Example alert conditions:</p>
+        <table>
+            <tr><th>Alert</th><th>Risk</th><th>Condition</th></tr>
+            <tr class="risk-critical"><td>Unencrypted private key</td><td>Critical</td><td>Key file has no passphrase</td></tr>
+            <tr class="risk-high"><td>Wrong key permissions</td><td>High</td><td>Private key is world- or group-readable</td></tr>
+            <tr class="risk-high"><td>Stale key (&gt;180 days)</td><td>High</td><td>Key has not been rotated</td></tr>
+            <tr class="risk-medium"><td>Live SSH agent</td><td>Medium</td><td>Agent socket found in /tmp — hijackable</td></tr>
+            <tr class="risk-medium"><td>RSA key &lt;4096 bits</td><td>Medium</td><td>Key size below recommended threshold</td></tr>
+        </table>
+
+        <h3>4. GitHub Key Verification</h3>
+        <p>If a GitHub username is supplied with <code class="highlight">--github USERNAME</code>, the tool fetches the user's public keys from the GitHub API and cross-references them against local <code class="highlight">authorized_keys</code>. This reveals whether any GitHub identity has been granted inbound SSH access.</p>
+
+        <h2>Output Formats</h2>
+        <p>fox-trace produces three output modes:</p>
+        <ul>
+            <li><strong>Terminal</strong> — colour-coded summary with risk score, blast radius, and alerts</li>
+            <li><strong>JSON</strong> — machine-readable full dump of all artefacts and findings</li>
+            <li><strong>HTML</strong> — interactive Shadow Map visualisation using D3.js force-directed graph (nodes = hosts/keys, edges = trust relationships)</li>
+        </ul>
+
+        <h2>Technical Challenges &amp; Solutions</h2>
+        <ul>
+            <li><strong>RSA key bit length:</strong> Public keys in <code class="highlight">authorized_keys</code> are base64-encoded blobs. A custom parser decodes the wire format (type field + modulus) to extract the actual bit count without shelling out to <code class="highlight">ssh-keygen</code>.</li>
+            <li><strong>Hashed known_hosts:</strong> OpenSSH optionally hashes hostnames with HMAC-SHA1. The tool detects hashed entries and marks them as opaque rather than skipping or misreporting them.</li>
+            <li><strong>SSH config aliases:</strong> A <code class="highlight">Host</code> block can map a short alias to a real hostname and a specific key. The parser resolves these so the trust graph reflects actual connectivity, not just what <code class="highlight">known_hosts</code> contains.</li>
+        </ul>
+
+        <h2>GitHub</h2>
+        <p>The project is maintained as an open-source repository.</p>
+        <pre># Example usage
+python3 foxtrace.py --html shadow_map.html --github myusername</pre>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>

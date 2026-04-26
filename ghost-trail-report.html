@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost-Trail Technical Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        h3 { font-size: 1.1em; color: #e0e0e0; }
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+            background-color: #0d141b;
+        }
+        th, td {
+            border: 1px solid #1a2a3a;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a2a3a;
+            color: #00d4ff;
+        }
+        pre {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        .alert-type  { color: #ff4d4d; }
+        .login-type  { color: #00d4ff; }
+        .file-type   { color: #40ffaa; }
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">&lt;- back to home</a>
+
+        <div class="metadata">DATE: 2026-04-26 | CATEGORY: DFIR | AUTHOR: ShadowFox</div>
+
+        <h1>ghost-trail — Technical Report</h1>
+
+        <p>A Python-based DFIR (Digital Forensics &amp; Incident Response) tool that reconstructs what happened on a Linux system after the fact. It parses binary login records, shell histories, recent file activity, and log gaps to produce a timestamped forensic timeline — exported as an interactive HTML report.</p>
+
+        <h2>Project Structure</h2>
+        <table>
+            <tr><th>File / Directory</th><th>Content</th></tr>
+            <tr><td>ghosttrail.py</td><td>CLI entry point, timeline orchestration, HTML export (~355 lines)</td></tr>
+            <tr><td>src/binary_parser.py</td><td>wtmp/btmp binary parser — extracts login/logout records</td></tr>
+            <tr><td>src/history_parser.py</td><td>Shell history reader (bash + zsh, including zsh timestamps)</td></tr>
+            <tr><td>src/file_tracker.py</td><td>Recent file activity via <code class="highlight">/proc/</code> and <code class="highlight">find -mtime</code></td></tr>
+            <tr><td>src/gap_detector.py</td><td>Detects anomalous gaps in system logs</td></tr>
+            <tr><td>src/evidence_collector.py</td><td>Copies artefacts to a timestamped evidence directory</td></tr>
+            <tr><td>tests/</td><td>50 tests across 2 modules</td></tr>
+        </table>
+
+        <h2>Core Functionality</h2>
+
+        <h3>1. Binary Login Records (wtmp/btmp)</h3>
+        <p>Linux stores login and logout events in <code class="highlight">/var/log/wtmp</code> and <code class="highlight">/var/log/btmp</code> as fixed-size binary structs (<code class="highlight">utmp</code> format). A custom parser reads these without relying on the <code class="highlight">last</code> command, extracting user, terminal, source IP, and timestamps — even if the binary has been partially overwritten.</p>
+
+        <h3>2. Shell History Analysis</h3>
+        <p>The tool reads both <code class="highlight">~/.bash_history</code> and <code class="highlight">~/.zsh_history</code>. Zsh history files embed Unix timestamps in the format <code class="highlight">: 1714000000:0;command</code> — these are stripped and converted to readable datetimes. The tool also scans for anti-forensic commands:</p>
+        <ul>
+            <li><code class="highlight">history -c</code> — clears in-memory history</li>
+            <li><code class="highlight">unset HISTFILE</code> — disables history logging for the session</li>
+            <li><code class="highlight">rm *log*</code> — log deletion attempts</li>
+        </ul>
+
+        <h3>3. Timeline Construction</h3>
+        <p>All events are merged into a single chronological timeline with three event types:</p>
+        <table>
+            <tr><th>Type</th><th>Colour</th><th>Examples</th></tr>
+            <tr><td class="alert-type">ALERT</td><td class="alert-type">Red</td><td>Anti-forensic commands, deleted executables, suspicious file access</td></tr>
+            <tr><td class="login-type">LOGIN</td><td class="login-type">Cyan</td><td>SSH logins, console sessions, failed login attempts</td></tr>
+            <tr><td class="file-type">FILE</td><td class="file-type">Green</td><td>Recently modified files, accessed configuration and credential paths</td></tr>
+        </table>
+
+        <h3>4. Log Gap Detection</h3>
+        <p>The gap detector compares consecutive timestamps in system logs (<code class="highlight">auth.log</code>, <code class="highlight">syslog</code>). An unusually long silence — where no events were recorded — can indicate that logs were deleted or a system was powered off outside of normal patterns.</p>
+
+        <h3>5. Interactive D3.js Timeline</h3>
+        <p>The HTML report includes a D3.js timeline with three swim lanes (ALERT / LOGIN / FILE). Each event is represented as a coloured dot that can be hovered for details. The timeline supports zoom and pan, and filter checkboxes allow focusing on specific event types. Clicking an event scrolls to its entry in the event log below.</p>
+
+        <h2>Technical Challenges &amp; Solutions</h2>
+        <ul>
+            <li><strong>Binary struct parsing:</strong> The <code class="highlight">utmp</code> struct layout differs between Linux versions (32-bit vs 64-bit time fields). The parser handles both layouts and validates the record type field before accepting an entry.</li>
+            <li><strong>PermissionError on CI:</strong> In GitHub Actions, <code class="highlight">path.exists()</code> raises <code class="highlight">PermissionError</code> for paths like <code class="highlight">/root/.bash_history</code> — not just <code class="highlight">open()</code>. The history parser wraps both calls in separate try/except blocks.</li>
+            <li><strong>Zsh timestamp stripping:</strong> Zsh history entries have the format <code class="highlight">: 1234567890:0;actual command</code>. A regex strips the timestamp prefix before the command is recorded in the timeline.</li>
+            <li><strong>JS in HTML template:</strong> The D3 timeline is embedded as a plain string constant (not an f-string) with <code class="highlight">__PLACEHOLDER__</code> tokens replaced at export time — avoiding <code class="highlight">{{</code>/<code class="highlight">}}</code> escaping throughout several hundred lines of JavaScript.</li>
+        </ul>
+
+        <h2>GitHub</h2>
+        <p>The project is maintained as an open-source repository.</p>
+        <pre># Example usage
+sudo python3 ghosttrail.py --hours 48 --html report.html</pre>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>
