@@ -96,14 +96,13 @@
           }
           .footer-left {
               display: flex;
-              align-items: flex-start;
-              gap: 24px;
-              flex: 2;
+              flex-direction: column;
+              gap: 20px;
+              flex: 1.5;
           }
           .footer-logo {
-              width: 160px;
-              opacity: 0.8;
-              flex-shrink: 0;
+              width: 140px;
+              opacity: 0.9;
           }
           .footer-col {
               flex: 1;
@@ -111,38 +110,84 @@
           .footer-col-title {
               color: #00d4ff;
               font-family: 'Courier New', Courier, monospace;
-              font-size: 0.75em;
+              font-size: 0.8em;
               letter-spacing: 2px;
               text-transform: uppercase;
-              margin: 0 0 10px 0;
+              margin: 0 0 15px 0;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+          }
+          .footer-col-title::before {
+              content: ">";
+              color: #00d4ff;
+              font-weight: bold;
           }
           .footer-col-link {
               color: #8a9baa;
               text-decoration: none;
-              font-size: 0.8em;
+              font-size: 0.85em;
               display: block;
-              line-height: 1.8;
+              margin-bottom: 10px;
+              transition: all 0.3s ease;
           }
           .footer-col-link:hover {
               color: #00d4ff;
+              transform: translateX(5px);
           }
           .footer-col-text {
               color: #8a9baa;
-              font-size: 0.8em;
-              line-height: 1.7;
+              font-size: 0.85em;
+              line-height: 1.6;
               margin: 0;
           }
-          .footer-copy {
+          .footer-bottom {
+              margin-top: 50px;
+              padding-top: 30px;
+              border-top: 1px solid rgba(26, 42, 58, 0.5);
               text-align: center;
-              font-size: 0.75em;
-              color: #8a9baa;
-              margin-top: 40px;
-              padding-top: 20px;
               max-width: 1100px;
               margin-left: auto;
               margin-right: auto;
           }
-          footer {
+          .footer-slogan {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.9em;
+              color: rgba(0, 212, 255, 0.5);
+              font-style: italic;
+              letter-spacing: 2px;
+              margin-bottom: 15px;
+          }
+          .lab-status {
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              font-size: 0.7em;
+              color: #40ffaa;
+              font-family: 'Courier New', Courier, monospace;
+              margin-bottom: 20px;
+              background: rgba(64, 255, 170, 0.05);
+              padding: 4px 12px;
+              border-radius: 20px;
+              border: 1px solid rgba(64, 255, 170, 0.2);
+          }
+          .status-dot {
+              width: 6px;
+              height: 6px;
+              background-color: #40ffaa;
+              border-radius: 50%;
+              box-shadow: 0 0 8px #40ffaa;
+              animation: pulse 2s infinite;
+          }
+          @keyframes pulse {
+              0% { opacity: 1; transform: scale(1); }
+              50% { opacity: 0.4; transform: scale(1.1); }
+              100% { opacity: 1; transform: scale(1); }
+          }
+          .footer-copy {
+              font-size: 0.75em;
+              color: #5a6b7a;
+          }          footer {
               margin-top: 60px;
               padding: 40px;
               border-top: 1px solid #1a2a3a;
@@ -490,13 +535,30 @@
                       <p class="footer-col-text">Network Security Specialist. My background as an investigator at Försäkringskassan gave me a sharp eye for complex data, patterns, and risk — skills I now apply to network infrastructure and security. I work primarily on Linux, run a home lab for continuous learning, and enjoy developing open-source tools that solve real security problems.</p>
                   </div>
               </div>
+              
               <div class="footer-col">
-                  <h3 class="footer-col-title">Contact</h3>
+                  <h3 class="footer-col-title">Resources</h3>
+                  <a href="#tools" class="footer-col-link">Security Tools</a>
+                  <a href="#reports" class="footer-col-link">Lab Reports</a>
+                  <a href="https://github.com/elin-olsson" target="_blank" class="footer-col-link">GitHub Repositories</a>
+              </div>
+
+              <div class="footer-col">
+                  <h3 class="footer-col-title">Connect</h3>
+                  <a href="https://www.linkedin.com/in/elin-olsson-622a3633" target="_blank" class="footer-col-link">LinkedIn Profile</a>
                   <a href="mailto:contact@shadowfox.se" class="footer-col-link">contact@shadowfox.se</a>
-                  <a href="https://github.com/elin-olsson" target="_blank" class="footer-col-link">github.com/elin-olsson</a>
+                  <span class="footer-col-link" style="cursor: default; opacity: 0.7;">Location: Sweden</span>
               </div>
           </div>
-          <p class="footer-copy">&copy; 2026 shadowfox.se</p>
+
+          <div class="footer-bottom">
+              <div class="lab-status">
+                  <span class="status-dot"></span>
+                  LAB STATUS: ONLINE
+              </div>
+              <div class="footer-slogan">Stay unseen, stay secure</div>
+              <p class="footer-copy">&copy; 2026 shadowfox.se</p>
+          </div>
       </footer>                                             
 
   </body>
