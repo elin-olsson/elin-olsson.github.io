@@ -184,12 +184,21 @@
           }
 
           /* Static Corner Nodes */
-          .welcome-text {
-              /* ... existing styles ... */
-              position: relative;
+          .corner-node {
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              background-color: #081018;
+              border: 1px solid #1a2a3a;
+              border-radius: 50%;
+              z-index: 3;
+              box-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
           }
-          /* We'll use a wrapper or additional technique for nodes if needed, 
-             but let's start with the moving packets first as they are the most 'living' part. */
+          .node-tl { top: -5px; left: -5px; border-color: #00d4ff; }
+          .node-tr { top: -5px; right: -5px; }
+          .node-bl { bottom: -5px; left: -5px; }
+          .node-br { bottom: -5px; right: -5px; }
+
           .welcome-text .prompt {
               color: #00d4ff;
               text-shadow: 0 0 1px rgba(0, 212, 255, 0.8);
@@ -339,7 +348,13 @@
       <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
-          <p class="welcome-text"><span class="prompt">shadowfox@security:~$</span> <span class="cmd">Feel free to explore and test my tools!</span><span class="cursor">|</span></p>                                                                              
+          <div class="welcome-text">
+              <span class="corner-node node-tl"></span>
+              <span class="corner-node node-tr"></span>
+              <span class="corner-node node-bl"></span>
+              <span class="corner-node node-br"></span>
+              <span class="prompt">shadowfox@security:~$</span> <span class="cmd">Feel free to explore and test my tools!</span><span class="cursor">|</span>
+          </div>                                                                              
    
           <div class="tools">                                                             
               <div class="tool-card">                       
