@@ -100,8 +100,8 @@
         <h2>Project Structure</h2>
         <table>
             <tr><th>File</th><th>Content</th></tr>
-            <tr><td>foxtrace.py</td><td>CLI entry point, output formatting, HTML and JSON export</td></tr>
-            <tr><td>src/harvester.py</td><td>Core logic: SSH parsing, fingerprinting, trust graph, risk scoring (~606 lines)</td></tr>
+            <tr><td>src/harvester.py</td><td>CLI entry point, core logic: SSH parsing, fingerprinting, trust graph, risk scoring</td></tr>
+            <tr><td>src/visualizer.py</td><td>HTML export with D3.js Shadow Map visualisation</td></tr>
             <tr><td>tests/</td><td>37 tests across 2 modules</td></tr>
         </table>
 
@@ -150,9 +150,9 @@
         </ul>
 
         <h2>GitHub</h2>
-        <p>The project is maintained as an open-source repository.</p>
+        <p>The project is maintained as an open-source repository at <a href="https://github.com/elin-olsson/fox-trace" class="back-link" target="_blank">github.com/elin-olsson/fox-trace</a>.</p>
         <pre># Example usage
-python3 foxtrace.py --html shadow_map.html --github myusername</pre>
+python3 src/harvester.py --html --github myusername</pre>
     </div>
 
     <footer>
