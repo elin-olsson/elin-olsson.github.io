@@ -116,11 +116,12 @@
         <h2>Core Functionality</h2>
         
         <h3>1. Multi-Source Parsers</h3>
-        <p>The tool handles three distinct log categories:</p>
+        <p>The tool handles four distinct log sources:</p>
         <ul>
             <li><strong>Auth/Secure:</strong> Tracks successful/failed SSH logins and sudo execution.</li>
             <li><strong>Firewall:</strong> Detects UFW, Firewalld, Iptables, and Nftables logs.</li>
             <li><strong>Auditd:</strong> Correlates syscalls and execution arguments (execve) with user identity.</li>
+            <li><strong>Systemd Journal:</strong> Reads SSH, sudo, and kernel events via <code class="highlight">journalctl</code> — merged with any file-based sources using <code class="highlight">--journal</code>.</li>
         </ul>
 
         <h3>2. Correlation Logic</h3>
@@ -130,7 +131,8 @@
             <tr class="severity-medium"><td>Brute Force</td><td>Medium</td><td>&ge; 5 failed logins within window</td></tr>
             <tr class="severity-critical"><td>Brute then Login</td><td>Critical</td><td>Brute force cluster followed by success</td></tr>
             <tr class="severity-high"><td>Scan then Login</td><td>High</td><td>Firewall block followed by login attempt</td></tr>
-            <tr class="severity-high"><td>Lateral Movement</td><td>High/Critical</td><td>Success login followed by sensitive execution</td></tr>
+            <tr class="severity-high"><td>Lateral Movement</td><td>High/Critical</td><td>Login followed by sensitive command execution or privilege escalation</td></tr>
+            <tr class="severity-high"><td>Credential Stuffing</td><td>High</td><td>&ge; 5 distinct usernames attempted from same IP within window</td></tr>
         </table>
 
         <h2>Technical Challenges & Solutions</h2>
@@ -141,10 +143,13 @@
             <li><strong>User-IP Mapping:</strong> Auditd doesn't log IPs for syscalls. The tool maps these back to the source IP by tracking the user's last successful SSH session.</li>
         </ul>
 
-        <h2>GitHub & Deployment</h2>
-        <p>The project is currently maintained as a private repository with plans for an open-source release once the codebase is fully polished.</p>
+        <h2>GitHub</h2>
+        <p>The project is available as an open-source repository at <a href="https://github.com/elin-olsson/chain-watch" class="back-link" target="_blank">github.com/elin-olsson/chain-watch</a>.</p>
         <pre># Example usage
-sudo python3 chainwatch.py --html report.html</pre>
+sudo python3 chainwatch.py --journal --html report.html
+
+# Real-time monitoring mode
+sudo python3 chainwatch.py --follow --interval 5</pre>
     </div>
 
     <footer>
