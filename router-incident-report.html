@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router Lockout Incident Report | ShadowFox Security</title>
+    <style>
+        body {
+            background-color: #050a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            padding: 60px 20px;
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1, h2, h3 {
+            color: #00d4ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2em; border-bottom: 1px solid #1a2a3a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { font-size: 1.3em; margin-top: 40px; }
+        h3 { font-size: 1.1em; color: #e0e0e0; }
+        .metadata {
+            color: #5a6b7a;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+            background-color: #0d141b;
+        }
+        th, td {
+            border: 1px solid #1a2a3a;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1a2a3a;
+            color: #00d4ff;
+        }
+        pre {
+            background-color: #0d141b;
+            border: 1px solid #1a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        .warn { color: #ff944d; }
+        .crit { color: #ff4d4d; }
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid #1a2a3a;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #5a6b7a;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">&lt;- back to home</a>
+
+        <div class="metadata">DATE: 2026-04-27 | CATEGORY: Incident Analysis | AUTHOR: ShadowFox</div>
+
+        <h1>Router Lockout Incident</h1>
+
+        <p>During a routine security audit of a home network, <code class="highlight">ssh-tls-auditor</code> unintentionally triggered a lockout on a primary gateway running Suricata in IPS mode. The incident provided direct insight into how inline intrusion prevention systems respond to audit traffic — and drove four versions of tool improvements.</p>
+
+        <h2>1. The Incident</h2>
+        <p>While running <code class="highlight">ssh-tls-auditor v1.7.1</code> against a home router, the tool initiated a rapid sequence of connection attempts to enumerate supported SSH key exchange algorithms, TLS cipher suites, and open ports. Within approximately 15 seconds, the router's management interface became unresponsive and all outbound traffic from the scanning host was dropped.</p>
+
+        <h2>2. Root Cause Analysis</h2>
+        <p>The lockout had two contributing factors:</p>
+        <ul>
+            <li><strong>Burst connection pattern:</strong> The auditor opens multiple parallel connections to probe algorithms and protocols. This produced a high-frequency burst that matched known scan signatures.</li>
+            <li><strong>Suricata in inline IPS mode:</strong> The router was running Suricata with ET SCAN rules in inline (not detection-only) mode. Once the pattern was matched, Suricata dynamically injected iptables rules to block the source IP in real time.</li>
+        </ul>
+        <p>Notably, the same scan against localhost or a local VM did not trigger the lockout — loopback traffic never passes through the physical network interface where Suricata sits inline.</p>
+
+        <h2>3. Remediation — v1.7.2 through v1.7.4</h2>
+        <p>The incident drove a series of targeted improvements to the auditor:</p>
+        <table>
+            <tr><th>Version</th><th>Change</th><th>Purpose</th></tr>
+            <tr><td>v1.7.2</td><td><code class="highlight">--delay SECONDS</code>, <code class="highlight">--ssh-port PORT</code></td><td>Group-level delay between check modules; support for non-standard SSH ports</td></tr>
+            <tr><td>v1.7.3</td><td><code class="highlight">--skip-ping</code>, external IP warning, ping pre-check</td><td>Warns before scanning public targets; skip ICMP check if filtered</td></tr>
+            <tr><td>v1.7.4</td><td><code class="highlight">--conn-delay SECONDS</code></td><td>Per-connection delay applied before every socket call — finer-grained than --delay and more effective against IDS pattern matching</td></tr>
+        </table>
+
+        <h2>4. Lessons Learned</h2>
+        <ul>
+            <li><strong>--delay is not enough against IPS:</strong> A group-level delay reduces burst peaks but doesn't prevent individual connections from arriving in a tight cluster. Per-connection delay (<code class="highlight">--conn-delay</code>) spreads the traffic profile more evenly.</li>
+            <li><strong>Suricata suppress list:</strong> The correct long-term fix for authorized testing is to add the scanner IP to Suricata's suppress list before scanning, not to slow down the tool.</li>
+            <li><strong>Always test locally first:</strong> Running the tool against localhost or a local VM before targeting network devices avoids triggering IPS rules on production infrastructure.</li>
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2026 shadowfox.se
+    </footer>
+</body>
+</html>
