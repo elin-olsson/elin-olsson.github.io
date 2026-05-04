@@ -91,7 +91,7 @@
     <div class="container">
         <a href="index.html" class="back-link">&lt;- back to home</a>
 
-        <div class="metadata">DATE: 2026-04-17 | CATEGORY: Configuration Audit | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-17 | VERSION: v1.7.4 | CATEGORY: Configuration Audit | AUTHOR: ShadowFox</div>
 
         <h1>ssh-tls-auditor — Technical Report</h1>
 
@@ -122,7 +122,14 @@
         <p>Each target receives an overall grade based on the number and severity of findings. Critical failures drive the grade down faster than warnings. The grading scale runs A (no failures) through F (four or more critical findings).</p>
 
         <h3>3. IDS-Aware Scanning</h3>
-        <p>The <code class="highlight">--conn-delay SECONDS</code> flag inserts a configurable delay between every connection attempt. This softens the scan profile against rate-limiting defences and IDS systems without skipping any checks.</p>
+        <p>Several flags are available to control scan behaviour against hardened or rate-limiting environments:</p>
+        <table>
+            <tr><th>Flag</th><th>Description</th></tr>
+            <tr><td><code class="highlight">--conn-delay SECONDS</code></td><td>Inserts a configurable delay between every individual connection attempt, softening the scan profile against IDS and rate-limiting defences.</td></tr>
+            <tr><td><code class="highlight">--delay SECONDS</code></td><td>Pause between check groups (e.g. between the SSH group and the TLS group), giving a coarser-grained throttle across protocol phases.</td></tr>
+            <tr><td><code class="highlight">--ssh-port PORT</code></td><td>Target a non-standard SSH port (default: 22).</td></tr>
+            <tr><td><code class="highlight">--skip-ping</code></td><td>Skip the ICMP pre-check — useful when the target filters ICMP but the service is still reachable.</td></tr>
+        </table>
 
         <h2>Technical Challenges &amp; Solutions</h2>
         <ul>
