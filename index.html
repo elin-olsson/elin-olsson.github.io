@@ -426,7 +426,7 @@
   </head>                                                                                 
   <body>
 
-      <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
+      <img src="assets/nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
           <div class="welcome-text">
@@ -446,7 +446,7 @@
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/ssh-tls-auditor" target="_blank">
                       <div class="tool-card-wrapper">
-                          <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
+                          <img src="assets/nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
                       </div>
                   </a>
                   <p>Audits SSH, TLS, HTTP, SMTP, FTP, RDP and email configurations — checks algorithms, certificates, security headers and known weaknesses.</p>
@@ -456,7 +456,7 @@
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/chain-watch" target="_blank">
                       <div class="tool-card-wrapper">
-                          <img src="nyloggac-w.png" alt="Chain-Watch">
+                          <img src="assets/nyloggac-w.png" alt="Chain-Watch">
                       </div>
                   </a>
                   <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
@@ -464,7 +464,7 @@
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/fox-trace" target="_blank">
                       <div class="tool-card-wrapper">
-                          <img src="nyloggafox-trace260427.png" alt="Fox-trace">
+                          <img src="assets/nyloggafox-trace260427.png" alt="Fox-trace">
                       </div>
                   </a>
                   <p>Maps SSH trust relationships and analyzes potential lateral movement paths to visualize your network's true attack surface.</p>
@@ -472,14 +472,14 @@
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/ghost-trail" target="_blank">
                       <div class="tool-card-wrapper">
-                          <img src="nyloggag-t260427.png" alt="Ghost-Trail">
+                          <img src="assets/nyloggag-t260427.png" alt="Ghost-Trail">
                       </div>
                   </a>
                   <p>Reconstructs forensic timelines from Linux binary logs, shell histories, file activity and log gaps — detects suspicious commands, reverse shells and log tampering.</p>
               </div>
               <div class="tool-card tool-card-inert">
                   <div class="tool-card-wrapper">
-                      <img src="nyloggavdi.png" alt="ShadowFox VDI">
+                      <img src="assets/nyloggavdi.png" alt="ShadowFox VDI">
                       <span class="coming-soon-badge">IN PROGRESS</span>
                   </div>
                   <p>A self-hosted VDI platform built on Flask, TigerVNC, noVNC and Cloudflare Tunnel — with per-user Linux isolation and a web-based terminal.</p>
@@ -489,7 +489,7 @@
           <h2 class="section-title" id="reports">Tool Writeups</h2>
 
           <div class="reports-grid">
-              <a href="ssh-tls-auditor-report.html" class="report-card">
+              <a href="reports/ssh-tls-auditor-report.html" class="report-card">
                   <div class="report-date">2026-04-10</div>
                   <h3>SSH-TLS Auditor: Multi-Protocol Auditing</h3>
                   <p>A comprehensive security tool for auditing SSH, TLS, HTTP, SMTP, FTP, and RDP. Checks for weak algorithms, expired certificates, and insecure banners.</p>
@@ -500,7 +500,7 @@
                   </div>
               </a>
 
-              <a href="chain-watch-report.html" class="report-card">
+              <a href="reports/chain-watch-report.html" class="report-card">
                   <div class="report-date">2026-04-21</div>
                   <h3>Chain-Watch: Building a Log Correlator</h3>
                   <p>Developing a Python-based security tool to detect multi-stage attacks by correlating SSH logs, firewalls, and auditd events.</p>
@@ -511,7 +511,7 @@
                   </div>
               </a>
 
-              <a href="fox-trace-report.html" class="report-card">
+              <a href="reports/fox-trace-report.html" class="report-card">
                   <div class="report-date">2026-04-26</div>
                   <h3>Fox-Trace: Mapping SSH Trust Relationships</h3>
                   <p>Building a tool that maps SSH trust graphs — authorized keys, known hosts, and live agents — to calculate blast radius and surface hidden lateral movement paths.</p>
@@ -522,7 +522,7 @@
                   </div>
               </a>
 
-              <a href="ghost-trail-report.html" class="report-card">
+              <a href="reports/ghost-trail-report.html" class="report-card">
                   <div class="report-date">2026-04-26</div>
                   <h3>Ghost-Trail: Linux Forensic Timeline Reconstructor</h3>
                   <p>A DFIR tool that reconstructs post-incident timelines from wtmp binary records, shell histories, file activity, and log gaps — with an interactive D3.js timeline export.</p>
@@ -537,7 +537,7 @@
           <h2 class="section-title" id="lab-notes">Lab Notes</h2>
 
           <div class="reports-grid">
-              <a href="rpi-setup-report.html" class="report-card">
+              <a href="reports/rpi-setup-report.html" class="report-card">
                   <div class="report-date">2026-04-18</div>
                   <h3>RPi 4: Resurrection &amp; DietPi Setup</h3>
                   <p>Recovering a Raspberry Pi 4, troubleshooting kernel-cache issues with SD-cards, and configuring a clean DietPi installation.</p>
@@ -548,7 +548,7 @@
                   </div>
               </a>
 
-              <a href="router-incident-report.html" class="report-card">
+              <a href="reports/router-incident-report.html" class="report-card">
                   <div class="report-date">2026-04-27</div>
                   <h3>Router Lockout: Suricata IPS vs. Security Auditor</h3>
                   <p>How ssh-tls-auditor unintentionally triggered a Suricata IPS lockout — root cause analysis and the tool improvements that followed across v1.7.2 through v1.7.4.</p>
@@ -565,7 +565,7 @@
       <footer>
           <div class="footer-columns">
               <div class="footer-left">
-                  <img src="nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
+                  <img src="assets/nyloggashadowdox.png" alt="ShadowFox Logo" class="footer-logo">
               </div>
 
               <div class="footer-col footer-col-about">

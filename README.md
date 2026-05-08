@@ -10,15 +10,11 @@ Presents the open-source security tools built under the ShadowFox brand, each wi
 
 ## Structure
 
-| File | Content |
+| Path | Content |
 |------|---------|
 | `index.html` | Landing page — tool overview, lab notes, footer |
-| `chain-watch-report.html` | Technical writeup for chain-watch |
-| `fox-trace-report.html` | Technical writeup for fox-trace |
-| `ghost-trail-report.html` | Technical writeup for ghost-trail |
-| `ssh-tls-auditor-report.html` | Technical writeup for ssh-tls-auditor |
-| `rpi-setup-report.html` | Lab note — Raspberry Pi subnet router setup |
-| `router-incident-report.html` | Lab note — Suricata IPS incident |
+| `reports/` | Technical writeups and lab notes (one HTML file per report) |
+| `assets/` | Images and logos |
 
 ## Run locally
 
