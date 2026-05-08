@@ -99,7 +99,7 @@
     <div class="container">
         <a href="index.html" class="back-link"><- back to home</a>
         
-        <div class="metadata">DATE: 2026-04-21 | VERSION: v1.3.1 | CATEGORY: Log Analysis | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-21 | VERSION: v1.4.0 | CATEGORY: Log Analysis | AUTHOR: ShadowFox</div>
         
         <h1>chain-watch — Technical Report</h1>
         
@@ -110,7 +110,7 @@
             <tr><th>File</th><th>Content</th></tr>
             <tr><td>chainwatch.py</td><td>Core logic: parsers, correlator, CLI, and reporting (~1,780 lines)</td></tr>
             <tr><td>requirements.txt</td><td>Minimal dependencies (only pytest for development)</td></tr>
-            <tr><td>tests/</td><td>Comprehensive test suite (120 tests across 8 modules)</td></tr>
+            <tr><td>tests/</td><td>Comprehensive test suite (128 tests across 9 modules)</td></tr>
         </table>
 
         <h2>Core Functionality</h2>
@@ -133,7 +133,7 @@
             <tr class="severity-high"><td>Scan then Login</td><td>High</td><td>Firewall block followed by login attempt</td></tr>
             <tr class="severity-high"><td>Lateral Movement</td><td>High/Critical</td><td>Login followed by sensitive command execution or privilege escalation</td></tr>
             <tr class="severity-high"><td>Credential Stuffing</td><td>High</td><td>&ge; 5 distinct usernames attempted from same IP within window</td></tr>
-            <tr class="severity-high"><td>Account Manipulation</td><td>High</td><td>Login followed by ADD_USER/DEL_USER events via auditd (privilege escalation indicator)</td></tr>
+            <tr class="severity-critical"><td>Account Manipulation</td><td>Critical</td><td>Login followed by user account creation or deletion (ADD_USER/DEL_USER via auditd)</td></tr>
         </table>
 
         <h2>Technical Challenges & Solutions</h2>
@@ -148,6 +148,12 @@
         <p>The project is available as an open-source repository at <a href="https://github.com/elin-olsson/chain-watch" class="back-link" target="_blank">github.com/elin-olsson/chain-watch</a>.</p>
         <pre># Example usage
 sudo python3 chainwatch.py --journal --html report.html
+
+# Show only high and critical incidents
+sudo python3 chainwatch.py --level high
+
+# Filter by time range
+sudo python3 chainwatch.py --since 02:00 --until 06:00
 
 # Real-time monitoring mode
 sudo python3 chainwatch.py --follow --interval 5</pre>
