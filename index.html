@@ -68,16 +68,38 @@
           }                                                 
           .coming-soon-badge {
               position: absolute;
-              top: 12px;                                                                  
+              top: 12px;
               right: 12px;
-              background-color: #0d1f2d;                                                  
-              color: #00d4ff;                               
-              font-family: 'Courier New', Courier, monospace;                             
+              background-color: #0d1f2d;
+              color: #00d4ff;
+              font-family: 'Courier New', Courier, monospace;
               font-size: 0.7em;
-              padding: 4px 10px;                                                          
-              border: 1px solid #00d4ff44;                  
-              border-radius: 4px;                                                         
+              padding: 4px 10px;
+              border: 1px solid #00d4ff44;
+              border-radius: 4px;
               letter-spacing: 1px;
+          }
+          .tool-group-label {
+              width: 100%;
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.78em;
+              color: #5a6b7a;
+              letter-spacing: 1px;
+              padding: 4px 0 0 0;
+          }
+          .tool-group-spacer {
+              width: 100%;
+              height: 15px;
+          }
+          .tool-card-inert {
+              cursor: default;
+          }
+          .tool-card-inert:hover {
+              transform: none;
+          }
+          .tool-card-inert img {
+              border-color: #1a2a3a;
+              box-shadow: none;
           }                                                                               
           footer {
               margin-top: 60px;
@@ -420,15 +442,17 @@
           <h2 class="section-title" id="tools">Security Tools</h2>
 
           <div class="tools">
-              <div class="tool-card">                       
-                  <a href="https://github.com/elin-olsson/ssh-tls-auditor" 
-  target="_blank">
+              <div class="tool-group-label">// network auditing — run against targets you own or have permission to test</div>
+              <div class="tool-card">
+                  <a href="https://github.com/elin-olsson/ssh-tls-auditor" target="_blank">
                       <div class="tool-card-wrapper">
-                          <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">    
+                          <img src="nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
                       </div>
-                  </a>                                                                    
-                  <p>Audits SSH, TLS, HTTP, SMTP, FTP, RDP and email configurations — checks algorithms, certificates, security headers and known weaknesses.</p>                                                  
+                  </a>
+                  <p>Audits SSH, TLS, HTTP, SMTP, FTP, RDP and email configurations — checks algorithms, certificates, security headers and known weaknesses.</p>
               </div>
+              <div class="tool-group-spacer"></div>
+              <div class="tool-group-label">// host &amp; forensics — runs locally on your own system</div>
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/chain-watch" target="_blank">
                       <div class="tool-card-wrapper">
@@ -452,6 +476,13 @@
                       </div>
                   </a>
                   <p>Reconstructs forensic timelines from Linux binary logs, shell histories, file activity and log gaps — detects suspicious commands, reverse shells and log tampering.</p>
+              </div>
+              <div class="tool-card tool-card-inert">
+                  <div class="tool-card-wrapper">
+                      <img src="nyloggavdi.png" alt="ShadowFox VDI">
+                      <span class="coming-soon-badge">IN PROGRESS</span>
+                  </div>
+                  <p>A self-hosted VDI platform built on Flask, TigerVNC, noVNC and Cloudflare Tunnel — with per-user Linux isolation and a web-based terminal.</p>
               </div>
           </div>
 
