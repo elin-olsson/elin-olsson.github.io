@@ -187,54 +187,7 @@
               max-width: 860px;
               box-sizing: border-box;
               animation: box-glow 4s ease-in-out infinite alternate;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              text-align: left;
-              min-height: 160px;
-              cursor: text;
           }
-          
-          #terminal-history {
-              width: 100%;
-              pointer-events: none;
-          }
-          
-          .history-item {
-              margin-bottom: 8px;
-              width: 100%;
-          }
-
-          .input-line {
-              display: flex;
-              width: 100%;
-              align-items: center;
-              gap: 10px;
-          }
-
-          #terminal-input {
-              background: transparent;
-              border: none;
-              color: #ffffff;
-              font-family: 'Courier New', Courier, monospace;
-              font-size: 1em;
-              outline: none;
-              flex: 1;
-              padding: 0;
-              margin: 0;
-              caret-color: transparent;
-          }
-
-          .terminal-output {
-              color: #8a9baa;
-              margin: 5px 0 15px 20px;
-              font-size: 0.9em;
-              line-height: 1.4;
-              white-space: pre-wrap;
-              border-left: 1px solid #00d4ff33;
-              padding-left: 15px;
-          }
-
           @keyframes box-glow {
               from { box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.05), 0 0 10px rgba(0, 212, 255, 0.05); }
               to { box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.05), 0 0 20px rgba(0, 212, 255, 0.15); }
@@ -289,21 +242,19 @@
           .node-bl { bottom: -5px; left: -5px; }
           .node-br { bottom: -5px; right: -5px; }
 
-          .prompt {
+          .welcome-text .prompt {
               color: #00d4ff;
               text-shadow: 0 0 1px rgba(0, 212, 255, 0.8);
               font-weight: bold;
-              white-space: nowrap;
           }
-          .cmd {
+          .welcome-text .cmd {
               color: #ffffff;
               text-shadow: 0 0 1px rgba(0, 212, 255, 0.5);
           }
-          .cursor {
+          .welcome-text .cursor {
               color: #00d4ff;
               animation: blink 1s step-end infinite;
               text-shadow: 0 0 8px #00d4ff;
-              margin-left: -5px;
           }
           @keyframes blink {
               0%, 100% { opacity: 1; }
@@ -456,23 +407,14 @@
       <img src="nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
                                                             
       <div class="content">
-          <div class="welcome-text" onclick="document.getElementById('terminal-input').focus()">
+          <div class="welcome-text">
               <span class="corner-node node-tl"></span>
               <span class="corner-node node-tr"></span>
               <span class="corner-node node-bl"></span>
               <span class="corner-node node-br"></span>
               <span class="packet p1"></span>
               <span class="packet p2"></span>
-              <div id="terminal-history">
-                  <div class="history-item">
-                      <span class="prompt">shadowfox@security:~$</span> <span class="cmd">Open-source security tools. Built in the dark.</span>
-                  </div>
-              </div>
-              <div class="input-line">
-                  <span class="prompt">shadowfox@security:~$</span>
-                  <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
-                  <span class="cursor">|</span>
-              </div>
+              <span class="prompt">shadowfox@security:~$</span> <span class="cmd">Open-source security tools. Built in the dark.</span><span class="cursor">|</span>
           </div>                                                                              
    
           <h2 class="section-title" id="tools">Security Tools</h2>
@@ -621,55 +563,6 @@
               <p class="footer-copy">&copy; 2026 shadowfox.se</p>
           </div>
       </footer>                                             
-
-      <script>
-          const terminalInput = document.getElementById('terminal-input');
-          const terminalHistory = document.getElementById('terminal-history');
-          const prompt = '<span class="prompt">shadowfox@security:~$</span>';
-
-          const commands = {
-              'help': 'Available commands:\n  help          - Show this menu\n  ls            - List directory contents\n  whoami        - Display identity information\n  tools         - List all security tools\n  ghost-trail   - Show Ghost-Trail status\n  clear         - Clear terminal screen',
-              'ls': 'drwxr-xr-x  2  shadowfox  security  4096  Apr 26  tools/\ndrwxr-xr-x  2  shadowfox  security  4096  May 05  reports/\ndrwxr-xr-x  2  shadowfox  security  4096  May 08  lab-notes/',
-              'whoami': 'Elin Olsson\nNetwork Security Specialist\nFocus: Linux Forensics, Tool Development, Home Lab Research',
-              'tools': 'Current Suite:\n  - SSH-TLS Auditor: Multi-protocol auditing\n  - Chain-Watch: Event correlation & detection\n  - Fox-Trace: Lateral movement mapping\n  - Ghost-Trail: Forensic timeline reconstruction',
-              'ghost-trail': 'Ghost-Trail v1.2.0 - [RELEASE READY]\nStatus: Optimized (95% noise reduction)\nFeatures: A-F Forensic Grading, SHA-256 evidence manifest.\nLocation: /opt/shadowfox/ghost-trail',
-              'clear': 'CLEAR'
-          };
-
-          terminalInput.addEventListener('keydown', function(e) {
-              if (e.key === 'Enter') {
-                  const input = terminalInput.value.trim().toLowerCase();
-                  const historyLine = document.createElement('div');
-                  historyLine.className = 'history-item';
-                  historyLine.innerHTML = `${prompt} <span class="cmd">${terminalInput.value}</span>`;
-                  terminalHistory.appendChild(historyLine);
-
-                  if (input === 'clear') {
-                      terminalHistory.innerHTML = '';
-                  } else if (input !== '') {
-                      const response = document.createElement('div');
-                      response.className = 'terminal-output';
-                      
-                      if (commands[input]) {
-                          response.innerText = commands[input];
-                      } else {
-                          response.innerText = `Command not found: ${input}. Type 'help' for assistance.`;
-                      }
-                      terminalHistory.appendChild(response);
-                  }
-
-                  terminalInput.value = '';
-                  // Scroll to bottom
-                  const terminal = document.querySelector('.welcome-text');
-                  terminal.scrollTop = terminal.scrollHeight;
-              }
-          });
-
-          // Focus input on any click within terminal
-          document.querySelector('.welcome-text').addEventListener('click', () => {
-              terminalInput.focus();
-          });
-      </script>
 
   </body>
   </html>
