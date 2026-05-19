@@ -17,6 +17,8 @@
         }
         .container {
             max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
             padding: 60px 20px;
         }
         .back-link {
@@ -49,11 +51,14 @@
             margin: 20px 0;
             font-size: 0.9em;
             background-color: #0d141b;
+            display: block;
+            overflow-x: auto;
         }
         th, td {
             border: 1px solid #1a2a3a;
             padding: 12px;
             text-align: left;
+            word-break: break-word;
         }
         th {
             background-color: #1a2a3a;
