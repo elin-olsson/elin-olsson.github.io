@@ -28,6 +28,8 @@
           .content {
               padding: 40px;
               max-width: 900px;
+              width: 100%;
+              box-sizing: border-box;
               text-align: center;                                                         
           }
           .tools {                                                                        
@@ -313,6 +315,8 @@
               transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
               text-decoration: none;
               color: inherit;
+              box-sizing: border-box;
+              width: 100%;
           }
           .report-card:hover:not(.report-card-disabled) {
               border-color: #00d4ff66;
@@ -376,8 +380,11 @@
 
           /* Responsive Adjustments */
           @media (max-width: 768px) {
+              body {
+                  overflow-x: hidden;
+              }
               .content {
-                  padding: 20px;
+                  padding: 16px;
               }
               .welcome-text {
                   font-size: 0.95em;
@@ -390,6 +397,10 @@
               }
               .reports-grid {
                   grid-template-columns: 1fr;
+                  gap: 16px;
+              }
+              .report-card {
+                  padding: 18px;
               }
               .footer-columns {
                   flex-direction: column;
