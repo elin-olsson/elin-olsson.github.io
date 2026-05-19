@@ -1,27 +1,27 @@
 <!DOCTYPE html>
   <html lang="en">
-  <head>                                                                                  
+  <head>
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">              
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="description" content="ShadowFox Security – open-source security tools by
    Elin Olsson.">
       <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'">
       <meta http-equiv="X-Frame-Options" content="DENY">
-      <meta name="referrer" content="strict-origin-when-cross-origin">                                                                         
+      <meta name="referrer" content="strict-origin-when-cross-origin">
       <title>ShadowFox Security</title>
-      <style>                                                                             
-          body {                                            
+      <style>
+          body {
               background-color: #050a0f;
               color: #e0e0e0;
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;               
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
               margin: 0;
-              display: flex;                                                              
-              flex-direction: column;                       
+              display: flex;
+              flex-direction: column;
               align-items: center;
-          }                                                                               
+          }
           .banner {
-              width: 100%;                                                                
-              max-width: 1000px;                            
+              width: 100%;
+              max-width: 1000px;
               height: auto;
               margin-top: 20px;
           }
@@ -30,19 +30,19 @@
               max-width: 900px;
               width: 100%;
               box-sizing: border-box;
-              text-align: center;                                                         
+              text-align: center;
           }
-          .tools {                                                                        
-              display: flex;                                
+          .tools {
+              display: flex;
               justify-content: center;
               gap: 30px;
               flex-wrap: wrap;
               margin-top: 20px;
           }
-          .tool-card {                                                                    
+          .tool-card {
               width: 350px;
-              transition: transform 0.3s ease;                                            
-          }                                                 
+              transition: transform 0.3s ease;
+          }
           .tool-card:hover {
               transform: scale(1.02);
           }
@@ -57,17 +57,17 @@
           .tool-card:hover img {
               border-color: #00d4ff;
               box-shadow: 0 0 35px rgba(0, 212, 255, 0.5);
-          }                                                                               
-          .tool-card p {                                    
+          }
+          .tool-card p {
               font-size: 0.85em;
-              color: #8a9baa;                                                             
+              color: #8a9baa;
               margin-top: 10px;
-          }                                                                               
-          .tool-card-wrapper {                              
-              position: relative;                                                         
+          }
+          .tool-card-wrapper {
+              position: relative;
               display: inline-block;
-              width: 100%;                                                                
-          }                                                 
+              width: 100%;
+          }
           .coming-soon-badge {
               position: absolute;
               top: 12px;
@@ -102,7 +102,7 @@
           .tool-card-inert img {
               border-color: #1a2a3a;
               box-shadow: none;
-          }                                                                               
+          }
           footer {
               margin-top: 60px;
               padding: 40px;
@@ -215,7 +215,7 @@
               content: "";
               position: absolute;
               top: 0; left: 0; bottom: 0; right: 0;
-              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
                           linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
               background-size: 100% 3px, 3px 100%;
               z-index: 1;
@@ -235,7 +235,7 @@
           }
           .p1 { animation: packet-move 12s linear infinite; }
           .p2 { animation: packet-move 12s linear infinite -6s; }
-          
+
           @keyframes packet-move {
               0%   { top: -3px; left: -3px; }
               40%  { top: -3px; left: calc(100% - 1px); }
@@ -416,11 +416,11 @@
               }
           }
       </style>
-  </head>                                                                                 
+  </head>
   <body>
 
-      <img src="assets/nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">      
-                                                            
+      <img src="assets/nybannerhemsidashadowfox.png" alt="ShadowFox Banner" class="banner">
+
       <div class="content">
           <div class="welcome-text">
               <span class="corner-node node-tl"></span>
@@ -430,8 +430,8 @@
               <span class="packet p1"></span>
               <span class="packet p2"></span>
               <span class="prompt">shadowfox@security:~$</span> <span class="cmd">Open-source security tools. Built in the dark.</span><span class="cursor">|</span>
-          </div>                                                                              
-   
+          </div>
+
           <h2 class="section-title" id="tools">Security Tools</h2>
 
           <div class="tools">
@@ -567,7 +567,7 @@
                   <h3 class="footer-col-title">About</h3>
                   <p class="footer-col-text">Network Security Specialist. My background as an investigator at Försäkringskassan gave me a sharp eye for complex data, patterns, and risk — skills I now apply to network infrastructure and security. I work primarily on Linux, run a home lab for continuous learning, and enjoy developing open-source tools that solve real security problems.</p>
               </div>
-              
+
               <div class="footer-col">
                   <h3 class="footer-col-title">Connect</h3>
                   <a href="mailto:contact@shadowfox.se" class="footer-col-link">contact@shadowfox.se</a>
@@ -588,7 +588,7 @@
               <div class="footer-slogan">Stay unseen, stay secure</div>
               <p class="footer-copy">&copy; 2026 shadowfox.se</p>
           </div>
-      </footer>                                             
+      </footer>
 
   </body>
   </html>
