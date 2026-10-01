@@ -89,6 +89,27 @@
               letter-spacing: 1px;
               padding: 4px 0 0 0;
           }
+          .phase-line {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.85em;
+              color: #8a9baa;
+              letter-spacing: 2px;
+              margin: -10px 0 25px 0;
+          }
+          .phase-line .phase {
+              color: #00d4ff;
+          }
+          .tool-phase {
+              font-family: 'Courier New', Courier, monospace;
+              font-size: 0.75em;
+              color: #00d4ff;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              margin-top: 12px;
+          }
+          .tool-phase + p {
+              margin-top: 4px;
+          }
           .tool-group-spacer {
               width: 100%;
               height: 15px;
@@ -433,6 +454,7 @@
           </div>
 
           <h2 class="section-title" id="tools">Security Tools</h2>
+          <div class="phase-line"><span class="phase">Prevent</span> &rarr; <span class="phase">Assess</span> &rarr; <span class="phase">Detect</span> &rarr; <span class="phase">Investigate</span></div>
 
           <div class="tools">
               <div class="tool-group-label">// network auditing — run against targets you own or have permission to test</div>
@@ -442,25 +464,28 @@
                           <img src="assets/nyloggassh-tls-auditor.png" alt="SSH-TLS Auditor">
                       </div>
                   </a>
+                  <div class="tool-phase">// Assess</div>
                   <p>Audits SSH, TLS, HTTP, SMTP, FTP, RDP and email configurations — checks algorithms, certificates, security headers and known weaknesses.</p>
               </div>
               <div class="tool-group-spacer"></div>
               <div class="tool-group-label">// host &amp; forensics — runs locally on your own system</div>
-              <div class="tool-card">
-                  <a href="https://github.com/elin-olsson/chain-watch" target="_blank">
-                      <div class="tool-card-wrapper">
-                          <img src="assets/nyloggac-w.png" alt="Chain-Watch">
-                      </div>
-                  </a>
-                  <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
-              </div>
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/fox-trace" target="_blank">
                       <div class="tool-card-wrapper">
                           <img src="assets/nyloggafox-trace260427.png" alt="Fox-trace">
                       </div>
                   </a>
+                  <div class="tool-phase">// Prevent</div>
                   <p>Maps SSH trust relationships and analyzes potential lateral movement paths to visualize your network's true attack surface.</p>
+              </div>
+              <div class="tool-card">
+                  <a href="https://github.com/elin-olsson/chain-watch" target="_blank">
+                      <div class="tool-card-wrapper">
+                          <img src="assets/nyloggac-w.png" alt="Chain-Watch">
+                      </div>
+                  </a>
+                  <div class="tool-phase">// Detect</div>
+                  <p>Reads auth.log, firewall logs, auditd and the systemd journal — correlates events by source IP to detect SSH brute force, port scans, and post-login lateral movement.</p>
               </div>
               <div class="tool-card">
                   <a href="https://github.com/elin-olsson/ghost-trail" target="_blank">
@@ -468,7 +493,17 @@
                           <img src="assets/nyloggag-t260427.png" alt="Ghost-Trail">
                       </div>
                   </a>
+                  <div class="tool-phase">// Investigate</div>
                   <p>Reconstructs forensic timelines from Linux binary logs, shell histories, file activity and log gaps — detects suspicious commands, reverse shells and log tampering.</p>
+              </div>
+              <div class="tool-group-spacer"></div>
+              <div class="tool-group-label">// platform — run the tools from your browser, no terminal needed</div>
+              <div class="tool-card tool-card-inert">
+                  <div class="tool-card-wrapper">
+                      <img src="assets/nyloggadashboard.png" alt="ShadowFox Dashboard">
+                      <span class="coming-soon-badge">COMING SOON</span>
+                  </div>
+                  <p>A web dashboard on top of all four tools — pick tools and a target, run the scan, read the summary and download one consolidated PDF report. Built for small businesses without an IT department.</p>
               </div>
               <div class="tool-group-spacer"></div>
               <div class="tool-group-label">// infrastructure — self-hosted remote desktop with per-user Linux isolation</div>
