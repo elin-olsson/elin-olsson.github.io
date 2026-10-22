@@ -104,7 +104,7 @@
     <div class="container">
         <a href="../index.html" class="back-link"><- back to home</a>
         
-        <div class="metadata">DATE: 2026-04-21 | VERSION: v1.4.0 | CATEGORY: Log Analysis | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-21 | VERSION: v1.4.0 | UPDATED: 2026-10-22 | CATEGORY: Log Analysis | AUTHOR: ShadowFox</div>
         
         <h1>chain-watch — Technical Report</h1>
         
@@ -147,6 +147,14 @@
             <li><strong>Auditd Hex Decoding:</strong> Auditd often encodes arguments in hex. A custom decoder was implemented to normalize these into readable strings.</li>
             <li><strong>Time Normalization:</strong> Different logs use different timestamp formats. The tool normalizes everything to a standard UTC datetime object for precise correlation.</li>
             <li><strong>User-IP Mapping:</strong> Auditd doesn't log IPs for syscalls. The tool maps these back to the source IP by tracking the user's last successful SSH session.</li>
+        </ul>
+
+        <h2>Update — October 2026</h2>
+        <p>This report describes the tool as of the version above. The current release is <strong>v1.5.1</strong>; changes since then:</p>
+        <ul>
+            <li><strong>PDF reports:</strong> <code class="highlight">--pdf FILE</code> writes a paginated, client-ready report. Built with a small dependency-free PDF writer shared by all ShadowFox tools — no LaTeX, no headless browser. Includes the statistics header and per-incident breakdown.</li>
+            <li><strong>RFC 3339 timestamps:</strong> syslog lines in RFC 3339 format — the default on Ubuntu 24.04 and later — are now parsed. Previously such systems produced zero events.</li>
+            <li>135 tests across 10 modules.</li>
         </ul>
 
         <h2>GitHub</h2>

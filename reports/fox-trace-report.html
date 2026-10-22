@@ -96,7 +96,7 @@
     <div class="container">
         <a href="../index.html" class="back-link">&lt;- back to home</a>
 
-        <div class="metadata">DATE: 2026-04-26 | VERSION: v1.3.0 | CATEGORY: SSH Security | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-26 | VERSION: v1.3.0 | UPDATED: 2026-10-22 | CATEGORY: SSH Security | AUTHOR: ShadowFox</div>
 
         <h1>fox-trace — Technical Report</h1>
 
@@ -157,6 +157,14 @@
             <li><strong>RSA key bit length:</strong> Public keys in <code class="highlight">authorized_keys</code> are base64-encoded blobs. A custom parser decodes the wire format (type field + modulus) to extract the actual bit count without shelling out to <code class="highlight">ssh-keygen</code>.</li>
             <li><strong>Hashed known_hosts:</strong> OpenSSH optionally hashes hostnames with HMAC-SHA1. The tool detects hashed entries and marks them as opaque rather than skipping or misreporting them.</li>
             <li><strong>SSH config aliases:</strong> A <code class="highlight">Host</code> block can map a short alias to a real hostname and a specific key. The parser resolves these so the trust graph reflects actual connectivity, not just what <code class="highlight">known_hosts</code> contains.</li>
+        </ul>
+
+        <h2>Update — October 2026</h2>
+        <p>This report describes the tool as of the version above. The current release is <strong>v1.4.0</strong>; changes since then:</p>
+        <ul>
+            <li><strong>PDF reports:</strong> <code class="highlight">--pdf FILE</code> writes a paginated, client-ready report. Built with a small dependency-free PDF writer shared by all ShadowFox tools — no LaTeX, no headless browser. <code class="highlight">--targets</code> scans get a multi-host variant with per-host risk and circular trust findings.</li>
+            <li><strong><code class="highlight">--version</code></strong> flag.</li>
+            <li>49 tests.</li>
         </ul>
 
         <h2>GitHub</h2>

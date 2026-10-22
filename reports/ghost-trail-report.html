@@ -96,7 +96,7 @@
     <div class="container">
         <a href="../index.html" class="back-link">&lt;- back to home</a>
 
-        <div class="metadata">DATE: 2026-04-26 | VERSION: v1.4.0 | CATEGORY: DFIR | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-26 | VERSION: v1.4.0 | UPDATED: 2026-10-22 | CATEGORY: DFIR | AUTHOR: ShadowFox</div>
 
         <h1>ghost-trail — Technical Report</h1>
 
@@ -153,6 +153,14 @@
             <li><strong>PermissionError on CI:</strong> In GitHub Actions, <code class="highlight">path.exists()</code> raises <code class="highlight">PermissionError</code> for paths like <code class="highlight">/root/.bash_history</code> — not just <code class="highlight">open()</code>. The history parser wraps both calls in separate try/except blocks.</li>
             <li><strong>Zsh timestamp stripping:</strong> Zsh history entries have the format <code class="highlight">: 1234567890:0;actual command</code>. A regex strips the timestamp prefix before the command is recorded in the timeline.</li>
             <li><strong>JS in HTML template:</strong> The D3 timeline is embedded as a plain string constant (not an f-string) with <code class="highlight">__PLACEHOLDER__</code> tokens replaced at export time — avoiding <code class="highlight">{{</code>/<code class="highlight">}}</code> escaping throughout several hundred lines of JavaScript.</li>
+        </ul>
+
+        <h2>Update — October 2026</h2>
+        <p>This report describes the tool as of the version above. The current release is <strong>v1.5.0</strong>; changes since then:</p>
+        <ul>
+            <li><strong>PDF reports:</strong> <code class="highlight">--pdf FILE</code> writes a paginated, client-ready report. Built with a small dependency-free PDF writer shared by all ShadowFox tools — no LaTeX, no headless browser. Includes the grade, attack sequences (LOGIN → ALERT → FILE) and critical findings.</li>
+            <li><strong><code class="highlight">--version</code></strong> flag.</li>
+            <li>60 tests.</li>
         </ul>
 
         <h2>GitHub</h2>

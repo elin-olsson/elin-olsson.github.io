@@ -35,7 +35,7 @@ Open `http://localhost:8080` in a browser.
 | fox-trace | [github.com/elin-olsson/fox-trace](https://github.com/elin-olsson/fox-trace) | Live |
 | ghost-trail | [github.com/elin-olsson/ghost-trail](https://github.com/elin-olsson/ghost-trail) | Live |
 | ShadowFox Dashboard | Private | Coming soon |
-| ShadowFox VDI | [vdi.shadowfox.se](https://vdi.shadowfox.se) (private repo) | In progress |
+| ShadowFox VDI | [vdi.shadowfox.se](https://vdi.shadowfox.se) (private repo) | Paused |
 
 ---
 

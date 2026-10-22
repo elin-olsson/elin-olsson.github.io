@@ -96,7 +96,7 @@
     <div class="container">
         <a href="../index.html" class="back-link">&lt;- back to home</a>
 
-        <div class="metadata">DATE: 2026-04-17 | VERSION: v1.7.4 | CATEGORY: Configuration Audit | AUTHOR: ShadowFox</div>
+        <div class="metadata">DATE: 2026-04-17 | VERSION: v1.7.4 | UPDATED: 2026-10-22 | CATEGORY: Configuration Audit | AUTHOR: ShadowFox</div>
 
         <h1>ssh-tls-auditor — Technical Report</h1>
 
@@ -105,7 +105,7 @@
         <h2>Project Structure</h2>
         <table>
             <tr><th>File</th><th>Content</th></tr>
-            <tr><td>auditor.py</td><td>CLI entry point, all protocol checks, grading, CSV and JSON export (~3,300 lines)</td></tr>
+            <tr><td>auditor.py</td><td>CLI entry point, all protocol checks, grading, CSV, JSON, HTML and Markdown export (~3,300 lines)</td></tr>
             <tr><td>tests/</td><td>46 tests across 1 module</td></tr>
         </table>
 
@@ -116,11 +116,12 @@
         <table>
             <tr><th>Protocol</th><th>What is checked</th></tr>
             <tr><td>SSH</td><td>Key exchange algorithms, ciphers, MACs, host key types, root login, password auth, legacy protocol support, banner fingerprinting</td></tr>
-            <tr><td>TLS/HTTPS</td><td>Protocol versions (SSLv3–TLS 1.3), cipher suites, certificate validity, expiry, CN/SAN matching, OCSP status, signature algorithm</td></tr>
+            <tr><td>TLS/HTTPS</td><td>Protocol versions (TLS 1.0–1.3), weak cipher suites, certificate trust, expiry, SAN matching, signature algorithm, RSA key size, OCSP responder, DNS CAA/DNSSEC/DANE-TLSA</td></tr>
             <tr><td>HTTP</td><td>Security headers (HSTS, CSP, X-Frame-Options, etc.), HSTS preload status</td></tr>
-            <tr><td>SMTP</td><td>STARTTLS support, open relay test, DMARC, SPF, DKIM, DNS CAA/DNSSEC/TLSA</td></tr>
-            <tr><td>FTP</td><td>Anonymous login, plaintext credential exposure</td></tr>
-            <tr><td>RDP</td><td>NLA enforcement, deprecated RDP security layer detection</td></tr>
+            <tr><td>SMTP</td><td>STARTTLS support, weak ciphers, certificate validity, open relay test</td></tr>
+            <tr><td>Email DNS</td><td>SPF policy, DKIM (common selectors), DMARC policy and reporting</td></tr>
+            <tr><td>FTP</td><td>AUTH TLS support — flags servers that only accept cleartext transfers</td></tr>
+            <tr><td>RDP</td><td>Network Level Authentication (NLA) enforcement</td></tr>
         </table>
 
         <h3>2. Grading</h3>
@@ -142,6 +143,14 @@
             <li><strong>TLS cipher negotiation:</strong> Supported cipher suites are identified by probing the server repeatedly with different cipher lists, since a single TLS handshake only reveals what was negotiated, not the full set the server accepts.</li>
             <li><strong>IDS triggering:</strong> During testing against Suricata in IPS mode, rapid connection attempts triggered ET SCAN rules and caused active blocks. The <code class="highlight">--conn-delay</code> flag was added as a result, providing a per-connection sleep that reduces burst patterns.</li>
             <li><strong>External target detection:</strong> The tool warns when a target resolves outside RFC1918/loopback ranges, preventing accidental scanning of public infrastructure.</li>
+        </ul>
+
+        <h2>Update — October 2026</h2>
+        <p>This report describes the tool as of the version above. The current release is <strong>v1.8.0</strong>; changes since then:</p>
+        <ul>
+            <li><strong>PDF reports:</strong> <code class="highlight">--pdf FILE</code> writes a paginated, client-ready report. Built with a small dependency-free PDF writer shared by all ShadowFox tools — no LaTeX, no headless browser. Each host gets its own section with grade, counts and failed checks with remediation.</li>
+            <li><strong>Dependencies:</strong> paramiko ≥ 5.0.0, dnspython ≥ 2.8.0.</li>
+            <li>48 tests.</li>
         </ul>
 
         <h2>GitHub</h2>
