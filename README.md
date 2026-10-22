@@ -34,7 +34,8 @@ Open `http://localhost:8080` in a browser.
 | chain-watch | [github.com/elin-olsson/chain-watch](https://github.com/elin-olsson/chain-watch) | Live |
 | fox-trace | [github.com/elin-olsson/fox-trace](https://github.com/elin-olsson/fox-trace) | Live |
 | ghost-trail | [github.com/elin-olsson/ghost-trail](https://github.com/elin-olsson/ghost-trail) | Live |
-| ShadowFox VDI | [github.com/elin-olsson/ShadowFox-VDI](https://github.com/elin-olsson/ShadowFox-VDI) | In progress |
+| ShadowFox Dashboard | Private | Coming soon |
+| ShadowFox VDI | [vdi.shadowfox.se](https://vdi.shadowfox.se) (private repo) | In progress |
 
 ---
 
